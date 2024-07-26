@@ -8,7 +8,7 @@ interface IProps {
 }
 const ProductCard = ({ product }: IProps) => {
   return (
-    <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0 ">
+    <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0  ">
       <ImageComponent
         imageURL={product.image}
         alt={product.category.name}
@@ -32,18 +32,10 @@ const ProductCard = ({ product }: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-3 my-2">
-        <Button
-          className="bg-indigo-600"
-          onClick={() => {
-            console.log("clicked");
-          }}
-        >
-          Edit
-        </Button>
+        <Button className="bg-indigo-600">Edit</Button>
         <Button className="bg-red-700 " width="w-full">
           Delete
         </Button>
-    
       </div>
     </div>
   );
