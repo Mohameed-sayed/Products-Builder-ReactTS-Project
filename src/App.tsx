@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ProductCard from "./component/ProductCard";
 import Modal from "./component/ui/Modal";
-import { ProductList } from "./data";
+import { FormInputList, ProductList } from "./data";
 import Button from "./component/ui/Button";
+import  Input  from "./component/ui/Input";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +19,24 @@ const App = () => {
   const renderProductList = ProductList.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
-
+  const renderFormInputList = FormInputList.map((input) => (
+    <div className="flex flex-col">
+      <label htmlFor={input.id} className="mb-2 text-sm font-medium text-gray-700">{input.label} </label>
+      <Input
+        key={input.id}
+        type="text"
+        name={input.name}
+        id={input.id}
+        
+      />
+    </div>
+  ));
   return (
     <main className="container">
-      <Button className="bg-indigo-600  hover:bg-indigo-800 justify-between"  onClick={open}>
+      <Button
+        className="bg-indigo-600  hover:bg-indigo-800 justify-between"
+        onClick={open}
+      >
         Add
       </Button>
 
@@ -29,15 +44,17 @@ const App = () => {
         {renderProductList}
       </div>
       <Modal isOpen={isOpen} closeModal={close} title="ADD NEW PRODUCT">
-        <div className="space-x-3 flex items-center">
-          <Button className="bg-indigo-600 hover:bg-indigo-800">Submit</Button>
-          <Button
-            className="bg-gray-400 hover:bg-gray-600"
-            onClick={close}
-          >
-            Cancel
-          </Button>
-        </div>
+        <form className="space-y-3">
+          {renderFormInputList}
+          <div className="space-x-3 flex items-center">
+            <Button className="bg-indigo-600 hover:bg-indigo-800">
+              Submit
+            </Button>
+            <Button className="bg-gray-400 hover:bg-gray-600" onClick={close}>
+              Cancel
+            </Button>
+          </div>
+        </form>
       </Modal>
     </main>
   );
