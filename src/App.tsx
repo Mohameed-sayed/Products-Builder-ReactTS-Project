@@ -27,7 +27,7 @@ const App = () => {
   const close = () => {
     setIsOpen(false);
   };
-  const ProductHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const OnChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setProduct({
       ...product,
@@ -51,11 +51,12 @@ const App = () => {
         type="text"
         name={input.name}
         id={input.id}
-        value={""}
-        onChange={ProductHandler}
+        value={product[input.name]}
+        onChange={OnChangeHandler}
       />
     </div>
   ));
+
   return (
     <main className="container">
       <Button

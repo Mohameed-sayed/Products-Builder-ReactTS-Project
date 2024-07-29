@@ -13,7 +13,7 @@ export interface IProduct {
 export interface IFormInputList {
 
     id: string;
-    name: string;
+    name: "title"| "description" | "price" | "image";
     label: string;
     type: string;
 
