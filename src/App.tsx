@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import ProductCard from "./component/ProductCard";
 import Modal from "./component/ui/Modal";
 import { FormInputList, ProductList } from "./data";
@@ -7,8 +7,7 @@ import Input from "./component/ui/Input";
 import { IProduct } from "./interfaces";
 
 const App = () => {
-  //State
-  const [product, setProduct] = useState<IProduct>({
+  const ProductDefault = {
     title: "",
     description: "",
     image: "",
@@ -18,9 +17,20 @@ const App = () => {
       name: "",
       image: "",
     },
-  });
+  };
+  //State
+  const [product, setProduct] = useState<IProduct>(ProductDefault);
   const [isOpen, setIsOpen] = useState(false);
   //Handler
+  const OnSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(product);
+  };
+  const OnCancel = () => {
+    setProduct(ProductDefault);
+    close();
+    console.log("Canceled");
+  };
   const open = () => {
     setIsOpen(true);
   };
@@ -39,7 +49,7 @@ const App = () => {
     <ProductCard key={product.id} product={product} />
   ));
   const renderFormInputList = FormInputList.map((input) => (
-    <div className="flex flex-col">
+    <div className="flex flex-col" key={input.id}>
       <label
         htmlFor={input.id}
         className="mb-2 text-sm font-medium text-gray-700"
@@ -70,13 +80,16 @@ const App = () => {
         {renderProductList}
       </div>
       <Modal isOpen={isOpen} closeModal={close} title="ADD NEW PRODUCT">
-        <form className="space-y-3">
+        <form className="space-y-3" onSubmit={OnSubmit}>
           {renderFormInputList}
           <div className="space-x-3 flex items-center">
             <Button className="bg-indigo-600 hover:bg-indigo-800">
               Submit
             </Button>
-            <Button className="bg-gray-400 hover:bg-gray-600" onClick={close}>
+            <Button
+              className="bg-gray-400 hover:bg-gray-600"
+              onClick={OnCancel}
+            >
               Cancel
             </Button>
           </div>
