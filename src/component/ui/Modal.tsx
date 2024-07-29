@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
-import {  ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface IProps {
   isOpen: boolean;
