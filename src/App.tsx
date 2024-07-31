@@ -5,6 +5,8 @@ import { FormInputList, ProductList } from "./data";
 import Button from "./component/ui/Button";
 import Input from "./component/ui/Input";
 import { IProduct } from "./interfaces";
+import { productValidation } from "./Validation";
+import ErrorMessage from "./component/ui/ErrorMessage";
 
 const App = () => {
   const ProductDefault = {
@@ -20,12 +22,33 @@ const App = () => {
   };
   //State
   const [product, setProduct] = useState<IProduct>(ProductDefault);
+  const [errors, setError] = useState({
+    title: "",
+    description: "",
+    image: "",
+    price: "",
+  });
   const [isOpen, setIsOpen] = useState(false);
   //Handler
-  const OnSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const OnSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(product);
+    const { title, description, image, price } = product;
+    const errors = productValidation({
+      title,
+      description,
+      image,
+      price,
+    });
+    const hasErrorMsg =
+      Object.values(errors).some((value) => value === "") &&
+      Object.values(errors).every((value) => value === "");
+    if (!hasErrorMsg) {
+      setError(errors);
+      return;
+    }
+    console.log("Send To server");
   };
+
   const OnCancel = () => {
     setProduct(ProductDefault);
     close();
@@ -42,6 +65,10 @@ const App = () => {
     setProduct({
       ...product,
       [name]: value,
+    });
+    setError({
+      ...errors,
+      [name]: "",
     });
   };
   //Render
@@ -64,16 +91,18 @@ const App = () => {
         value={product[input.name]}
         onChange={OnChangeHandler}
       />
+      <ErrorMessage msg={errors[input.name]} />
     </div>
   ));
 
   return (
     <main className="container">
       <Button
-        className="bg-indigo-600  hover:bg-indigo-800 justify-between"
+        className="bg-indigo-600 hover:bg-indigo-800 grid space-x-3 items-center mt-2 justify-between"
+        width="w-fit"
         onClick={open}
       >
-        Add
+        Build Product
       </Button>
 
       <div className="gap-2 m-5 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
