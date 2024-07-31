@@ -100,7 +100,7 @@ export const ProductList: IProduct[] = [
         }
     }
 ]
-export const FormInputList : IFormInputList[] = [
+export const FormInputList: IFormInputList[] = [
     {
         id: "title",
         name: "title",
@@ -130,4 +130,18 @@ export const FormInputList : IFormInputList[] = [
 
     }
 ]
-
+export const colors: string[] = [
+    "#FF0000",
+    "#0000FF",
+    "#FFFF00",
+    "#00FFFF",
+    "#FF00FF",
+    "#FFA500",
+    "#800080",
+    "#00FF00",
+    "#FFC0CB",
+    "#A52A2A",
+    "#808080",
+    "#000000",
+    "#FFFFFF",
+]

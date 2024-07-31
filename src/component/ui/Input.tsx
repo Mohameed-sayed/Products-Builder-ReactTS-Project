@@ -6,7 +6,7 @@ const Input = ({ ...rest }: IProps) => {
     <div>
       <input
         className="shadow-md border-2 focus:border-indigo-600 focus:outline-none focus:ring-1
-                    focus:ring-indigo-600 rounded-md px=3 py-4 text-md p-2 w-full"
+                    focus:ring-indigo-600 rounded-md px=3 py-2 text-md p-1 w-full"
         {...rest}
       />
     </div>
