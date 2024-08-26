@@ -8,6 +8,7 @@ import { IProduct } from "./interfaces";
 import { productValidation } from "./Validation";
 import ErrorMessage from "./component/ui/ErrorMessage";
 import CircleColor from "./component/ui/CircleColor";
+import { v4 as uuid } from "uuid";
 
 const App = () => {
   const ProductDefault = {
@@ -21,18 +22,20 @@ const App = () => {
       image: "",
     },
   };
-  //State
+  /* ---------------------------------- State --------------------------------- */
   const [product, setProduct] = useState<IProduct>(ProductDefault);
+  const [products, setProducts] = useState<IProduct[]>(ProductList);
   const [tempColor, setTempcolor] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [errors, setError] = useState({
     title: "",
     description: "",
     image: "",
     price: "",
   });
-  const [isOpen, setIsOpen] = useState(false);
   console.log(tempColor);
-  //Handler
+
+  /* -------------------------------- Handler ------------------------------- */
   const OnSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const { title, description, image, price } = product;
@@ -49,7 +52,13 @@ const App = () => {
       setError(errors);
       return;
     }
-    console.log("Send To server");
+    setProducts((prev) => [
+      { ...product, id: uuid(), colors: tempColor },
+      ...prev,
+    ]);
+    setProduct(ProductDefault);
+    setTempcolor([]);
+    close();
   };
 
   const OnCancel = () => {
@@ -74,8 +83,9 @@ const App = () => {
       [name]: "",
     });
   };
-  //Render
-  const renderProductList = ProductList.map((product) => (
+  /* --------------------------------Render -------------------------------- */
+
+  const renderProductList = products.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
   const renderColorList = colors.map((color) => (
@@ -115,7 +125,7 @@ const App = () => {
   return (
     <main className="container">
       <Button
-        className="bg-indigo-600 hover:bg-indigo-800 grid space-x-3 items-center mt-2 justify-between"
+        className="bg-indigo-600 hover:bg-indigo-800 grid space-x-3  mt-2 "
         width="w-fit"
         onClick={open}
       >
@@ -160,5 +170,4 @@ const App = () => {
     </main>
   );
 };
-
 export default App;
