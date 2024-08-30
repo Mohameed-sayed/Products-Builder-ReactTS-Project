@@ -4,19 +4,20 @@ import ImageComponent from "./ImageComponent";
 import Button from "./ui/Button";
 import CircleColor from "./ui/CircleColor";
 
-
 interface IProps {
   product: IProduct;
+  setProductToEdit: (product: IProduct) => void;
+  OpenEdit: () => void;
 }
-const ProductCard = ({ product }: IProps) => {
-  const {title , description , image , price ,colors , category}=product
-    const renderColorList = colors.map((colors) => (
-    <CircleColor
-      color={colors}
-      key={colors}
-      
-    />
+const ProductCard = ({ product, setProductToEdit , OpenEdit }: IProps) => {
+  const { title, description, image, price, colors, category } = product;
+  const renderColorList = colors.map((colors) => (
+    <CircleColor color={colors} key={colors} />
   ));
+  const onEdit = () => {
+    setProductToEdit(product);
+    OpenEdit();
+  };
   return (
     <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0  ">
       <ImageComponent
@@ -28,11 +29,11 @@ const ProductCard = ({ product }: IProps) => {
       <p>{txtslicer(description)}</p>
 
       <div className="flex space-x-1  my-1 items-center ">
-         <div className="flex space-x-1 items-center flex-wrap ">
-            {renderColorList}
-          </div>
-          </div>
-        
+        <div className="flex space-x-1 items-center flex-wrap ">
+          {renderColorList}
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <span>{price}</span>
 
@@ -43,7 +44,9 @@ const ProductCard = ({ product }: IProps) => {
         />
       </div>
       <div className="flex items-center justify-between space-x-3 my-2">
-        <Button className="bg-indigo-600">Edit</Button>
+        <Button className="bg-indigo-600" onClick={onEdit}>
+          Edit
+        </Button>
         <Button className="bg-red-700 " width="w-full">
           Delete
         </Button>
