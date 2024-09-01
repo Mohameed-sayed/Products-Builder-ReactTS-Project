@@ -8,14 +8,17 @@ interface IProps {
   product: IProduct;
   setProductToEdit: (product: IProduct) => void;
   OpenEdit: () => void;
+  idx:number
+  setProductToEditIdx:(value : number)=>void;
 }
-const ProductCard = ({ product, setProductToEdit , OpenEdit }: IProps) => {
+const ProductCard = ({ product, setProductToEdit , OpenEdit ,idx, setProductToEditIdx }: IProps) => {
   const { title, description, image, price, colors, category } = product;
   const renderColorList = colors.map((colors) => (
     <CircleColor color={colors} key={colors} />
   ));
   const onEdit = () => {
     setProductToEdit(product);
+    setProductToEditIdx(idx)
     OpenEdit();
   };
   return (

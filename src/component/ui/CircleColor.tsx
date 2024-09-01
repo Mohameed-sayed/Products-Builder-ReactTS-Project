@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
+    
     color: string;
 }
 const CircleColor = ({ color , ...rest}: IProps) => {
