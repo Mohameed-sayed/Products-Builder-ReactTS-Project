@@ -8,10 +8,11 @@ interface IProps {
   product: IProduct;
   setProductToEdit: (product: IProduct) => void;
   OpenEdit: () => void;
-  idx:number
-  setProductToEditIdx:(value : number)=>void;
+  OpenConfirm: () => void;
+  idx: number;
+  setProductToEditIdx: (value: number) => void;
 }
-const ProductCard = ({ product, setProductToEdit , OpenEdit ,idx, setProductToEditIdx }: IProps) => {
+const ProductCard = ({ product, setProductToEdit , OpenEdit ,idx, setProductToEditIdx , OpenConfirm }: IProps) => {
   const { title, description, image, price, colors, category } = product;
   const renderColorList = colors.map((colors) => (
     <CircleColor color={colors} key={colors} />
@@ -21,6 +22,10 @@ const ProductCard = ({ product, setProductToEdit , OpenEdit ,idx, setProductToEd
     setProductToEditIdx(idx)
     OpenEdit();
   };
+  const onRemove=()=>{
+    setProductToEdit(product)
+    OpenConfirm();
+  }
   return (
     <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0  ">
       <ImageComponent
@@ -50,8 +55,8 @@ const ProductCard = ({ product, setProductToEdit , OpenEdit ,idx, setProductToEd
         <Button className="bg-indigo-600" onClick={onEdit}>
           Edit
         </Button>
-        <Button className="bg-red-700 " width="w-full">
-          Delete
+        <Button className="bg-[#c2344d] hover:bg-red-800 " width="w-full" onClick={onRemove}>
+          Remove
         </Button>
       </div>
     </div>

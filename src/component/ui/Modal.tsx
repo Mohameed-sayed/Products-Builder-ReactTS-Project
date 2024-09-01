@@ -7,6 +7,8 @@ interface IProps {
   closeModal: () => void;
   title?: string;
   children: ReactNode;
+  description?: string;
+  
 }
 
 export default function MyModal({
@@ -14,6 +16,7 @@ export default function MyModal({
   closeModal,
   title,
   children,
+  description,
 }: IProps) {
   return (
     <>
@@ -23,11 +26,11 @@ export default function MyModal({
         className="relative z-10 focus:outline-none"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto backdrop-blur-sm">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="w-full max-w-md rounded-xl bg-slate-100 p-6  duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-100"
             >
               {title && (
                 <DialogTitle
@@ -37,7 +40,7 @@ export default function MyModal({
                   {title}
                 </DialogTitle>
               )}
-
+              <div>{description}</div>
               <div className="mt-4">{children}</div>
             </DialogPanel>
           </div>
